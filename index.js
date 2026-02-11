@@ -1,5 +1,5 @@
 const { HtmlFetchParser } = require('html-fetch-parser');
-const github = require('@actions/github/lib/github'); // Updated import
+const github = require('@actions/github'); // Direct import
 const core = require('@actions/core');
 
 async function run() {
@@ -16,14 +16,14 @@ async function run() {
     // Prevent looping: Ignore if the comment is from a bot
     if (github.context.payload.comment.user.type === 'Bot') return;
 
-    // Fetch content from the HTML parser directly without axios
+    // Fetch content from the HTML parser
     const parser = await HtmlFetchParser.fetch('https://raw.githubusercontent.com/KazeDevID/html-fetch-parser/refs/heads/main/README.md');
 
-    // Assuming you want to reply with the parsed HTML or some specific data
-    const aiReply = parser.getText('h1'); // Example: get the first <h1> text
+    // Get the first <h1> text as a sample response
+    const aiReply = parser.getText('h1');
 
     // Send a reply to GitHub
-    await octokit.rest.issues.createComment({
+    await octokit.issues.createComment({
       owner,
       repo,
       issue_number: issueNumber,
