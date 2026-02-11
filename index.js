@@ -1,5 +1,5 @@
 const { HtmlFetchParser } = require('html-fetch-parser');
-const github = require('@actions/github');
+const github = require('@actions/github/lib/github'); // Updated import
 const core = require('@actions/core');
 
 async function run() {
